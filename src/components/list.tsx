@@ -35,18 +35,10 @@ const changeAncestorsChecked = (items: DataProps[][], dataSource: DataProps[], r
   })
   console.log(parent)
   /** 只要子层有一个没选中，父层肯定要被置为未选中 */
-  if (rowData.checked === false) {
-    parent.checked = false
-  }
-  if (rowData.checked === true) {
-    /** 判断兄弟节点是不是都被选中，是的话将父层选中 */
-    const isBrotherChecked = parent.children.every(item => {
-      return item.checked || item.value === rowData.value
-    })
-    if (isBrotherChecked) {
-      parent.checked = true
-    }
-  }
+  /** 判断兄弟节点是不是都被选中，是的话将父层选中 */
+  parent.checked = parent.children.every(item => {
+    return item.checked
+  })
   /** 向上递归，一直到最顶层 */
   if (level !== 0) {
     changeAncestorsChecked(items, dataSource, parent)
