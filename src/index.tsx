@@ -3,6 +3,7 @@ import Selected from './components/selected'
 import List from './components/list'
 import { DataProps, CascaderTransferProps } from './interface'
 import './less/base.less'
+import { handleGetData } from './utils'
 
 /**
  * 
@@ -22,14 +23,18 @@ const changeData = (data: DataProps[], level: number, parentId?: number | string
 }
 
 const ReactCascaderTransfer = (props: CascaderTransferProps) => {
-  const { dataSource, width, selectedWidth, titles } = props
+  const { value, dataSource, width, selectedWidth, titles } = props
+  let selected: DataProps[] = []
 
   changeData(dataSource, 0)
+  handleGetData(dataSource, value, selected)
+
+  console.log(selected)
 
   return (
     <div className="rct-flex">
-      <List dataSource={dataSource} width={width} titles={titles} />
-      <Selected selectedWidth={selectedWidth || 150} />
+      <List dataSource={dataSource} width={width} titles={titles} selected={selected} />
+      <Selected selectedWidth={selectedWidth || 150} selected={selected} />
     </div>
   )
 }

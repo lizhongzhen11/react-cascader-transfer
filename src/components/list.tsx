@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import ListItem from './listItem'
 import '../less/list.less'
 import { DataProps, ListProps } from '../interface'
+import { changeAncestorsChecked } from '../utils'
 
 /** 当前被点击层的最后一个子孙的层级 */
 let currRowLastChildLevel 
@@ -23,33 +24,11 @@ const isChild = (data: DataProps[], property: string, value: number | string) =>
   })
 }
 
-/**
- * @description checkbox改变引起父级checkbox改变
- */
-const changeAncestorsChecked = (items: DataProps[][], dataSource: DataProps[], rowData: DataProps) => {
-  console.log(items, dataSource, rowData)
-  const { level, parentId } = rowData
-  const parentItem = level === 0 ? dataSource : items[level - 1]
-  const parent = parentItem.find(item => {
-    return parentId ? item.value === parentId : item.value === rowData.value
-  })
-  console.log(parent)
-  /** 只要子层有一个没选中，父层肯定要被置为未选中 */
-  /** 判断兄弟节点是不是都被选中，是的话将父层选中 */
-  parent.checked = parent.children.every(item => {
-    return item.checked
-  })
-  /** 向上递归，一直到最顶层 */
-  if (level !== 0) {
-    changeAncestorsChecked(items, dataSource, parent)
-  }
-}
-
 const List = (props: ListProps) => {
   // 渲染列(层)的数据源
   let [listItems, setListItems] = useState([props.dataSource])
 
-  const { dataSource, width } = props
+  const { dataSource, width, selected } = props
   // 每列宽度
   const itemWidth = ~~width || 150
   // list总宽度
@@ -60,7 +39,8 @@ const List = (props: ListProps) => {
   // checkbox改变触发，需要重新渲染进而实时展示checkbox状态
   const handleChange = (e, rowData: DataProps) => {
     // console.log(e, rowData)
-    changeAncestorsChecked(listItems.slice(0, rowData.level), dataSource, rowData)
+    changeAncestorsChecked(listItems.slice(0, rowData.level), dataSource, rowData, selected)
+    console.log(selected)
     setListItems([...listItems])
   }
 

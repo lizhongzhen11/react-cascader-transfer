@@ -2,19 +2,8 @@ import React from 'react'
 import { Checkbox, Icon } from 'antd'
 import '../less/listItem.less'
 import { DataProps, ListItemProps } from '../interface'
+import { changeChildChecked } from '../utils'
 
-/**
- * 
- * @param data 
- * @param checked
- * @description 父级checkbox状态改变，引起子孙共同改变 
- */
-const changeChildChecked = (data: DataProps[], checked: boolean) => {
-  data.forEach((item, i) => {
-    data[i].checked = checked
-    item.children && changeChildChecked(item.children, checked)
-  })
-}
 
 const ListItem = (props: ListItemProps) => {
   const { title, width, disabled, dataSource, onChange, onExpand } = props

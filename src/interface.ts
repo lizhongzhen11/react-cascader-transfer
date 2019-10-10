@@ -17,6 +17,10 @@ export interface ListProps {
   disabled?: boolean;
   /** 自定义每列宽度 */
   width?: string | number;
+  /** 已选中数据 */
+  selected?: DataProps[];
+  /** 指定选中项 */
+  value?: number[] | string[];
 }
 
 export interface ListItemProps {
@@ -33,7 +37,7 @@ export interface ListItemProps {
 
 export interface CascaderTransferProps extends ListProps {
   /** 指定选中项 */
-  value?: string[];
+  value?: number[] | string[];
   /** 列头名 */
   titles?: string[];
   /** 自定义样式 */

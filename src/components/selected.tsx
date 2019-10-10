@@ -13,10 +13,14 @@ const Selected = (props: SelectedProps) => {
   return (
     <div className="rct-selected" style={{ width: `${selectedWidth}px` }}>
       <div className="rct-title rct-font-size">已选</div>
-      <span className="rct-selected-span rct-radius rct-flex rct-space-between">
-        <span></span>
-        <Icon type="close" className="rct-selected-delete rct-pointer" onClick={handleDelete} />
-      </span>
+      {
+        selected.map(item => (
+          <span className="rct-selected-span rct-radius rct-flex rct-space-between" key={item.value}>
+            <span>{item.label}</span>
+            <Icon type="close" className="rct-selected-delete rct-pointer" onClick={handleDelete} />
+          </span>
+        ))
+      }
     </div>
   )
 }
