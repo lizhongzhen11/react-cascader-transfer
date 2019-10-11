@@ -28,7 +28,7 @@ const List = (props: ListProps) => {
   // 渲染列(层)的数据源
   let [listItems, setListItems] = useState([props.dataSource])
 
-  const { dataSource, width, selected } = props
+  const { dataSource, width, selected, value, onChange } = props
   // 每列宽度
   const itemWidth = ~~width || 150
   // list总宽度
@@ -38,10 +38,9 @@ const List = (props: ListProps) => {
 
   // checkbox改变触发，需要重新渲染进而实时展示checkbox状态
   const handleChange = (e, rowData: DataProps) => {
-    // console.log(e, rowData)
-    changeAncestorsChecked(listItems.slice(0, rowData.level), dataSource, rowData, selected)
-    console.log(selected)
+    changeAncestorsChecked(listItems.slice(0, rowData.level), dataSource, rowData, selected, value)
     setListItems([...listItems])
+    onChange(selected, value)
   }
 
   // 点击一行触发，如果有子数据，则展开

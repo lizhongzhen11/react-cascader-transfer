@@ -20,7 +20,8 @@ export interface ListProps {
   /** 已选中数据 */
   selected?: DataProps[];
   /** 指定选中项 */
-  value?: number[] | string[];
+  value?: Array<number | string>;
+  onChange: (selected: DataProps[], value: Array<number | string>) => void
 }
 
 export interface ListItemProps {
@@ -37,7 +38,7 @@ export interface ListItemProps {
 
 export interface CascaderTransferProps extends ListProps {
   /** 指定选中项 */
-  value?: number[] | string[];
+  value?: Array<number | string>;
   /** 列头名 */
   titles?: string[];
   /** 自定义样式 */
