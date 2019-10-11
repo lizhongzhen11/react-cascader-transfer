@@ -47,13 +47,17 @@ export const changeAncestorsChecked = (
   }) : parent.checked
   /** 递归到顶层
    *  1. 且顶层节点也是选中状态，则将该顶层数据放入selected
-   *  2. 顶层节点未选中，则从selected中删除
+   *  2. 顶层节点未选中，则从selected中删除；注意：需要考虑到子孙后代可能有被选中的节点
    */
   if (level === 0) {
     rowData.checked && handleSelected(selected, value, rowData)
-    !rowData.checked && rowData.children && 
-    rowData.children.every(item => !item.checked) && 
-    handleSelected(selected, value, rowData, 'rootCancel')
+    if (!rowData.checked) {
+      const index = value.indexOf(rowData.value)
+      index >= 0 && value.splice(index, 1) && selected.splice(index, 1)
+      rowData.children &&
+        rowData.children.every(item => !item.checked) &&
+          handleSelected(selected, value, rowData, 'rootCancel')
+    }
     return
   }
   /** checkbox状态改变，更新selected数据 */
@@ -66,10 +70,10 @@ export const changeAncestorsChecked = (
   if (!rowData.checked) {
     /** 需要考虑到层级较多时，较上层选中其子孙后代都选中，然后取消靠后某一层的checkbox，需要将其已选中的祖先兄弟节点也要放进去 */
     /** 查找selected是不是已经有该节点数据，有的话需要删除 */
-    const rowDataIndex = findIndex(selected, rowData)
+    const rowDataIndex = value.indexOf(rowData.value)
     rowDataIndex >= 0 && selected.splice(rowDataIndex, 1) && value.splice(rowDataIndex, 1)
     parent.children.forEach(child => {
-      if (child.value !== rowData.value && child.checked && !value.includes(child.value)) {
+      if (child.checked && !value.includes(child.value)) {
         selected.push(child)
         value.push(child.value)
       }
