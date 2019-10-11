@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Selected from './components/selected'
 import List from './components/list'
 import { DataProps, CascaderTransferProps } from './interface'
 import './less/base.less'
-import { handleGetData } from './utils'
+import { handleGetData, cancelByDelete } from './utils'
 
 /**
  * 
@@ -26,23 +26,42 @@ const ReactCascaderTransfer = (props: CascaderTransferProps) => {
   const [selected, setSelected] = useState<DataProps[]>([])
   const [value, setValue] = useState<Array<number | string>>(props.value)
   const { dataSource, width, selectedWidth, titles, onChange } = props
-  // let selected: DataProps[] = []
+  
+  // 只在初始化时对数据源进行改变
+  useEffect(() => {
+    changeData(dataSource, 0)
+  }, [dataSource])
 
-  changeData(dataSource, 0)
   handleGetData(dataSource, value, selected)
 
   /** 获取最新的selected和value并赋值给原来的，引起组件重新渲染以及将数据抛出 */
-  const handleOnChange = (newestSelected: DataProps[], newestValue: Array<number | string>) => {
+  const handleOnChange = (newestSelected: DataProps[], newestValue: Array<number | string>, item?: DataProps) => {
     setSelected([...newestSelected])
     setValue([...newestValue])
+    /** 右侧面板删除操作也调该方法，不过需要改变左侧面板相应数据的checkbox状态 */
+    if (item) {
+      cancelByDelete(dataSource, item)
+    }
     onChange(selected, value)
   }
 
-
+  // console.log(dataSource)
   return (
     <div className="rct-flex">
-      <List dataSource={dataSource} width={width} titles={titles} selected={selected} value={value} onChange={handleOnChange}/>
-      <Selected selectedWidth={selectedWidth || 150} selected={selected} />
+      <List 
+        dataSource={dataSource} 
+        width={width} 
+        titles={titles} 
+        selected={selected} 
+        value={value} 
+        onChange={handleOnChange}
+      />
+      <Selected 
+        selectedWidth={selectedWidth || 150} 
+        selected={selected} 
+        value={value} 
+        onDelete={handleOnChange} 
+      />
     </div>
   )
 }

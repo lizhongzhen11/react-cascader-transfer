@@ -51,7 +51,11 @@ export interface CascaderTransferProps extends ListProps {
 
 export interface SelectedProps {
   /** 已选中数据 */
-  selected?: DataProps[]
+  selected: DataProps[];
+  /** 已选中数据的value */
+  value: Array<number | string>;
   /** 自定义已选框宽度 */
   selectedWidth?: number | string;
+  /** 删除数据 */
+  onDelete: (selected: DataProps[], value: Array<number | string>, item?: DataProps) => void
 }

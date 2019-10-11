@@ -1,13 +1,16 @@
 import React from 'react'
 import { Icon } from 'antd'
 import '../less/selected.less'
-import { SelectedProps } from '../interface'
+import { SelectedProps, DataProps } from '../interface'
 
 const Selected = (props: SelectedProps) => {
-  const { selectedWidth, selected } = props
+  const { selectedWidth, selected, value, onDelete } = props
 
-  const handleDelete = (e) => {
-    console.log(e)
+  const handleDelete = (e, item: DataProps) => {
+    const index = value.indexOf(item.value)
+    value.splice(index, 1)
+    selected.splice(index, 1)
+    onDelete(selected, value, item)
   }
 
   return (
@@ -17,7 +20,7 @@ const Selected = (props: SelectedProps) => {
         selected.map(item => (
           <span className="rct-selected-span rct-radius rct-flex rct-space-between" key={item.value}>
             <span>{item.label}</span>
-            <Icon type="close" className="rct-selected-delete rct-pointer" onClick={handleDelete} />
+            <Icon type="close" className="rct-selected-delete rct-pointer" onClick={(e) => handleDelete(e, item)} />
           </span>
         ))
       }

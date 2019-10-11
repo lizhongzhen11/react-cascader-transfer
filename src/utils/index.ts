@@ -220,3 +220,16 @@ export const handleSelected = (
   // 策略模式，直接根据对象属性来调用不同策略
   types[String(type)](selected, value, data, type, curr, parent)
 }
+
+/**
+ * 
+ * @param dataSource 
+ * @param item 
+ * @description 删除右侧已选中面板数据引起左侧checkbox取消选中
+ */
+export const cancelByDelete = (dataSource: DataProps[], item: DataProps) => {
+  const flatData = flatTree(dataSource)
+  const index = findIndex(flatData, item)
+  flatData[index].checked = false
+  flatData[index].children && changeChildChecked(flatData[index].children, false)
+}
