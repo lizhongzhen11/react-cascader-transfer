@@ -1,6 +1,6 @@
 {
   "name": "react-cascader-transfer",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "main": "react-cascader-transfer.js",
   "scripts": {
@@ -15,9 +15,9 @@
   "author": "lizhongzhen11",
   "license": "ISC",
   "bugs": {
-    "url": ""
+    "url": "https://github.com/lizhongzhen11/react-cascader-transfer/issues"
   },
-  "homepage": "",
+  "homepage": "https://github.com/lizhongzhen11/react-cascader-transfer",
   "devDependencies": {
     "@babel/core": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
