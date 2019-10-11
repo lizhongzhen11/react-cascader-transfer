@@ -1,7 +1,7 @@
 # react-cascader-transfer
 
 ## 预览
-<img src="./GIF.gif">
+<img src="https://raw.githubusercontent.com/lizhongzhen11/react-cascader-transfer/master/GIF.gif">
 
 ## 安装
 ```js
@@ -25,7 +25,7 @@ const handleOnchange = (selected, value) => {
 ```ts
 interface CascaderTransferProps {
   /** 指定选中项 */
-  value?: Array<number | string>;
+  value: Array<number | string>;
   /** 列头名 */
   titles?: string[];
   /** 自定义样式 */
