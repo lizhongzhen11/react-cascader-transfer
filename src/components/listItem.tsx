@@ -9,14 +9,14 @@ const ListItem = (props: ListItemProps) => {
   const { title, width, disabled, dataSource, onChange, onExpand } = props
 
   // checkbox变化触发
-  const handleOnChange = (e, rowData: DataProps) => {
+  const handleOnChange = (e: any, rowData: DataProps) => {
     rowData.checked = e.target.checked
     rowData.children && changeChildChecked(rowData.children, e.target.checked)
     onChange && onChange(e, rowData)
   }
 
   // 点击一行触发，如果有子数据，则展开
-  const handleExpand = (e, rowData: DataProps) => {
+  const handleExpand = (e: any, rowData: DataProps) => {
     onExpand && onExpand(e, rowData)
   }
 

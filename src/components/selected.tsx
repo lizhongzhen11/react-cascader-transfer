@@ -6,8 +6,11 @@ import { SelectedProps, DataProps } from '../interface'
 const Selected = (props: SelectedProps) => {
   const { selectedWidth, selected, value, onDelete } = props
 
-  const handleDelete = (e, item: DataProps) => {
-    const index = value.indexOf(item.value)
+  const handleDelete = (e: any, item: DataProps) => {
+    const index = item.value ? value.indexOf(item.value) : -1
+    if (index === -1) {
+      return
+    }
     value.splice(index, 1)
     selected.splice(index, 1)
     onDelete(selected, value, item)
@@ -20,7 +23,7 @@ const Selected = (props: SelectedProps) => {
         selected.map(item => (
           <span className="rct-selected-span rct-radius rct-flex rct-space-between" key={item.value}>
             <span>{item.label}</span>
-            <Icon type="close" className="rct-selected-delete rct-pointer" onClick={(e) => handleDelete(e, item)} />
+            <Icon type="close" className="rct-selected-delete rct-pointer" onClick={(e: any) => handleDelete(e, item)} />
           </span>
         ))
       }

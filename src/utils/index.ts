@@ -49,21 +49,23 @@ export const changeAncestorsChecked = (
    *  1. 且顶层节点也是选中状态，则将该顶层数据放入selected
    *  2. 顶层节点未选中，则从selected中删除；注意：需要考虑到子孙后代可能有被选中的节点
    */
-  if (level === 0) {
-    rowData.checked && handleSelected(selected, value, rowData)
-    if (!rowData.checked) {
-      const index = value.indexOf(rowData.value)
-      index >= 0 && value.splice(index, 1) && selected.splice(index, 1)
-      rowData.children &&
-        rowData.children.every(item => !item.checked) &&
-          handleSelected(selected, value, rowData, 'rootCancel')
-    }
-    return
-  }
+  // if (level === 0) {
+  //   rowData.checked && handleSelected(selected, value, rowData)
+  //   if (!rowData.checked) {
+  //     const index = value.indexOf(rowData.value)
+  //     index >= 0 && value.splice(index, 1) && selected.splice(index, 1)
+  //     rowData.children &&
+  //       rowData.children.every(item => !item.checked) &&
+  //         handleSelected(selected, value, rowData, 'rootCancel')
+  //   }
+  //   return
+  // }
   /** checkbox状态改变，更新selected数据 */
-  /** 该节点选中，但是其兄弟节点并未全部选中，父层也就未选中，所以将该节点数据放入selected */
-  if (!parent.checked && rowData.checked) {
-    handleSelected(selected, value, rowData, undefined, undefined, parent )
+  if (rowData.checked) {
+    /** 该节点选中，但是其兄弟节点并未全部选中，父层也就未选中，所以将该节点数据放入selected */
+    !parent.checked && handleSelected(selected, value, rowData, undefined, undefined, parent)
+    /** 该节点父节点选中，则该父节点下的所有子孙均选中,需要将父节点数据放入selected同时在selected和value中清除已存在的其子孙节点数据 */
+    parent.checked && handleSelected(selected, value, parent, 'parent-checked', undefined, parent)
   }
   /** 取消选中，在selected中查找是否存在该数据，存在的话删除 */
   /** 若之前父节点选中，取消选中该节点后，会导致该节点的所有祖先节点取消选中，需要从selected中删除这些祖先节点(如果已存在的话) */
@@ -190,6 +192,18 @@ const types = {
         value.push(selectedData[i].value)
       }
     }
+  },
+  // 该节点选中并且它父节点选中，直接把父节点数据放进去
+  'parent-checked': (
+    selected: DataProps[], 
+    value: Array<number | string>, 
+    data: DataProps, 
+    type?: string, 
+    curr?: DataProps, 
+    parent?: DataProps
+  ) => {
+    selected.push(data)
+    value.push(data.value)
   } 
 }
 
@@ -213,13 +227,13 @@ export const handleSelected = (
     flatData = [data, ...flatTree(data.children)]
   }
   /** 循环查找，如果selected中已存在其子孙节点，则删除 */
-  const dataIndex = findIndex(selected, data)
   for (let i = 0; i < flatData.length; i++ ) {
     const index = findIndex(selected, flatData[i])
-    if (index >= 0 && dataIndex >= 0) {
-      selected.splice(index, 1)
-      value.splice(index, 1)
+    if (index === -1) {
+      continue
     }
+    selected.splice(index, 1)
+    value.splice(index, 1)
   }
   // 策略模式，直接根据对象属性来调用不同策略
   types[String(type)](selected, value, data, type, curr, parent)

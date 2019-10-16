@@ -20,7 +20,7 @@ export interface ListProps {
   /** 已选中数据 */
   selected?: DataProps[];
   /** 指定选中项 */
-  value?: Array<number | string>;
+  value: Array<number | string>;
   onChange: (selected: DataProps[], value: Array<number | string>) => void
 }
 
@@ -32,13 +32,11 @@ export interface ListItemProps {
   disabled?: boolean;
   /** 自定义每列宽度 */
   width?: string | number;
-  onChange?: (e, rowData: DataProps) => void;
-  onExpand?: (e, rowData: DataProps) => void;
+  onChange?: (e: any, rowData: DataProps) => void;
+  onExpand?: (e: any, rowData: DataProps) => void;
 }
 
 export interface CascaderTransferProps extends ListProps {
-  /** 指定选中项 */
-  value?: Array<number | string>;
   /** 列头名 */
   titles?: string[];
   /** 自定义样式 */

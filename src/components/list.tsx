@@ -5,7 +5,7 @@ import { DataProps, ListProps } from '../interface'
 import { changeAncestorsChecked } from '../utils'
 
 /** 当前被点击层的最后一个子孙的层级 */
-let currRowLastChildLevel 
+let currRowLastChildLevel: number 
 
 /**
  * 
@@ -14,10 +14,10 @@ let currRowLastChildLevel
  * @param value
  * @description 判断是不是子级 
  */
-const isChild = (data: DataProps[], property: string, value: number | string) => {
+const isChild = (data: DataProps[], property: string, value: number | string | undefined) => {
   return data.some(item => {
     if (!item.children || !item.children.length) {
-      currRowLastChildLevel = item.level
+      currRowLastChildLevel = item.level || 0
       return item[property] === value
     }
     return item[property] === value || isChild(item.children, property, value)
@@ -28,28 +28,30 @@ const List = (props: ListProps) => {
   // 渲染列(层)的数据源
   let [listItems, setListItems] = useState([props.dataSource])
 
-  const { dataSource, width, selected, value, onChange } = props
+  const { dataSource, width, value, onChange } = props
+
+  let selected = props.selected || []
   // 每列宽度
-  const itemWidth = ~~width || 150
+  const itemWidth = width ? ~~width : 150
   // list总宽度
   const listWidth = itemWidth * listItems.length
   // 列头名称数组
   const titles = props.titles || []
 
   // checkbox改变触发，需要重新渲染进而实时展示checkbox状态
-  const handleChange = (e, rowData: DataProps) => {
+  const handleChange = (e: any, rowData: DataProps) => {
     changeAncestorsChecked(listItems.slice(0, rowData.level), dataSource, rowData, selected, value)
     setListItems([...listItems])
     onChange(selected, value)
   }
 
   // 点击一行触发，如果有子数据，则展开
-  const handleExpand = (e, rowData: DataProps) => {
+  const handleExpand = (e: any, rowData: DataProps) => {
     if (!rowData.children || !rowData.children.length || e.target.type === 'checkbox') {
       return
     }
     /** 当前被点击层的层级 */
-    const level = rowData.level
+    const level = rowData.level || 0
     /** 目前已经展开的最后一层的parentId */
     const lastParentId = listItems.slice(-1)[0][0].parentId
     /** 目前已经展开的最后一层的层级 */
@@ -69,7 +71,7 @@ const List = (props: ListProps) => {
   }
 
   // 渲染树
-  const handleRender = (data) => {
+  const handleRender = (data: Array<DataProps[]>) => {
     return data.map((item, i) => {
       return <ListItem key={i} title={titles[i]} width={itemWidth} dataSource={item} onChange={handleChange} onExpand={handleExpand} />
     })
