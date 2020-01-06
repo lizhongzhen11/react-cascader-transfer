@@ -40,11 +40,11 @@ module.exports = {
     ]
   },
   plugins: [
-    // new HtmlWebpackPlugin({
+    // new HtmlWebpackPlugin({ // 本地测试需要放开
     //   template: path.resolve(__dirname, 'index.html')
     // })
   ],
-  externals: { // 打包到生产并发布到npm上需要开启，因为用到了react hooks，不然会因为有两个react副本而导致hooks报错
+  externals: { // 打包到生产并发布到npm上需要开启，因为用到了react hooks，不然会因为有两个react副本而导致hooks报错，本地测试需要注掉
     react: {
       root: 'React',
       commonjs2: 'react',
