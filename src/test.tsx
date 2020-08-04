@@ -8,10 +8,6 @@ const handleOnchange = (selected, value) => {
   console.log('handleOnchange...', selected, value)
 }
 
-var data = []
-
-setTimeout(() => data = city, 2000)
-
 ReactDOM.render(
   <ReactCascaderTransfer dataSource={city} titles={['省级', '市级']} value={['11', '81', '321000', '320100', '120103', '513300']} onChange={handleOnchange}/>,
   document.getElementById("root")

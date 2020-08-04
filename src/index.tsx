@@ -3,7 +3,7 @@ import Selected from './components/selected'
 import List from './components/list'
 import { DataProps, CascaderTransferProps } from './interface'
 import './less/base.less'
-import { flatTree, handleChangeCheck } from './utils'
+import { flatTree } from './utils'
 
 
 const ReactCascaderTransfer = (props: CascaderTransferProps) => {

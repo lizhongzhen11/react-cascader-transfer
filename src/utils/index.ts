@@ -26,10 +26,3 @@ export const isOffspring = (data, parentId) => {
   return flatData.some(item => item.parentId === parentId)
 }
 
-
-/**
- * 
- */
-export const handleChangeCheck = () => {
-
-}

@@ -3,7 +3,22 @@
 ## 预览
 <img src="https://raw.githubusercontent.com/lizhongzhen11/react-cascader-transfer/master/GIF.gif">
 
-## 运行
+## 使用
+
+```js
+npm i react-cascader-transfer
+
+import react-cascader-transfer from 'react-cascader-transfer'
+import city from './config/city'
+
+
+const handleOnchange = (selected, value) => {
+  console.log(selected, value)
+}
+<ReactCascaderTransfer dataSource={city} titles={['省级', '市级']} value={['11', '81', '321000', '320100', '120103', '513300']} onChange={handleOnchange}/>
+```
+
+## clone到本地运行
 ```js
 npm install
 npm start
