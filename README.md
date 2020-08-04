@@ -24,6 +24,14 @@ const handleOnchange = (selected, value) => {
 见 **interface.ts**
 ```ts
 interface CascaderTransferProps {
+  /** 数据源 */
+  dataSource: DataProps[];
+  /** 禁用*/
+  disabled?: boolean;
+  /** 自定义每列宽度 */
+  width?: string | number;
+  /** 已选中数据 */
+  selected?: DataProps[];
   /** 指定选中项 */
   value: Array<number | string>;
   /** 列头名 */
@@ -34,14 +42,7 @@ interface CascaderTransferProps {
   className?: string;
   /** 自定义已选框宽度 */
   selectedWidth?: number | string;
-  /** 数据源 */
-  dataSource: DataProps[];
-  /** 禁用*/
-  disabled?: boolean; // 待开发
-  /** 自定义每列宽度 */
-  width?: string | number;
-  /** 已选中数据 */
-  selected?: DataProps[];
+  /** 已选数据改变 */
   onChange: (selected: DataProps[], value: Array<number | string>) => void
 }
 ```

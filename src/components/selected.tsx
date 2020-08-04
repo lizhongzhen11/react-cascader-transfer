@@ -4,16 +4,10 @@ import '../less/selected.less'
 import { SelectedProps, DataProps } from '../interface'
 
 const Selected = (props: SelectedProps) => {
-  const { selectedWidth, selected, value, onDelete } = props
+  const { selectedWidth, selected, onDelete } = props
 
   const handleDelete = (e: any, item: DataProps) => {
-    const index = item.value ? value.indexOf(item.value) : -1
-    if (index === -1) {
-      return
-    }
-    value.splice(index, 1)
-    selected.splice(index, 1)
-    onDelete(selected, value, item)
+    onDelete(item.value)
   }
 
   return (
