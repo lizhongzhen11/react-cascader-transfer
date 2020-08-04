@@ -3,22 +3,12 @@
 ## 预览
 <img src="https://raw.githubusercontent.com/lizhongzhen11/react-cascader-transfer/master/GIF.gif">
 
-## 安装
+## 运行
 ```js
-npm install react-cascader-transfer --save-dev
+npm install
+npm start
 ```
 
-## 用法
-```tsx
-import ReactCascaderTransfer from 'react-cascader-transfer'
-import city from './config/city'
-
-const handleOnchange = (selected, value) => {
-  console.log(selected, value)
-}
-
-<ReactCascaderTransfer dataSource={city} titles={['省级', '市级']} value={['11', '120103', '513300']} onChange={handleOnchange}/>,
-```
 
 ## API
 见 **interface.ts**
@@ -46,3 +36,9 @@ interface CascaderTransferProps {
   onChange: (selected: DataProps[], value: Array<number | string>) => void
 }
 ```
+
+## 核心 | core
+
+该组件最难的地方在于改变左侧 checkbox 选中状态，联动的改变其父辈和子孙的选中状态，且设置最新的选中值。大致流程见下图：
+
+<img src="https://s1.ax1x.com/2020/08/04/awhSN8.png">
