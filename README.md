@@ -8,8 +8,8 @@
 ```js
 npm i react-cascader-transfer
 
-import react-cascader-transfer from 'react-cascader-transfer'
-import city from './config/city'
+import ReactCascaderTransfer from 'react-cascader-transfer'
+import city from 'react-cascader-transfer/src/config/city'
 
 
 const handleOnchange = (selected, value) => {
