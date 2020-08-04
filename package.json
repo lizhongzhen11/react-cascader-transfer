@@ -19,10 +19,10 @@
   },
   "homepage": "https://github.com/lizhongzhen11/react-cascader-transfer",
   "devDependencies": {
-    "@babel/core": "^7.10.5",
-    "@babel/preset-env": "^7.10.4",
+    "@babel/core": "^7.11.0",
+    "@babel/preset-env": "^7.11.0",
     "@types/node": "^12.12.53",
-    "@types/react": "^16.9.43",
+    "@types/react": "^16.9.44",
     "@types/react-dom": "^16.9.8",
     "antd": "^3.26.18",
     "babel-loader": "^8.1.0",
@@ -36,7 +36,7 @@
     "style-loader": "^1.2.1",
     "ts-loader": "^6.2.2",
     "typescript": "^3.9.7",
-    "webpack": "^4.44.0",
+    "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
   },
@@ -58,5 +58,6 @@
         }
       ]
     ]
-  }
+  },
+  "dependencies": {}
 }
